@@ -12,10 +12,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.hostname = "itamae-target"
     web.vm.box = "ubuntu/trusty64"
     web.vm.network :private_network, ip: "192.168.33.99"
+    web.vm.network :public_network, bridge: "enp0s25", ip: "192.168.220.55"
 
     config.vm.provision :itamae do |config|
       config.sudo = true
-      config.recipes = ["./recipe.rb"]
+      config.recipes = ['./recipe.rb']
       config.json = "json/master01.json"
       config.log_level = "debug"
     end
