@@ -13,6 +13,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.box = "ubuntu/trusty64"
     web.vm.network :private_network, ip: "192.168.33.99"
     web.vm.network :public_network, bridge: "enp0s25", ip: "192.168.220.55"
+    web.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
 
     config.vm.provision :itamae do |config|
       config.sudo = true
