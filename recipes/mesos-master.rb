@@ -4,7 +4,7 @@ end
 
 execute "add conf to /etc/zookeeper/conf/zoo.cfg" do
   user "root"
-  command "echo #{node["master_ips"].map.with_index(1){|ip,i|"server.#{i}=#{ip}"}.join("\n")}:2888:3888 >> /etc/zookeeper/conf/zoo.cfg"
+  command "echo #{node["master_ips"].map.with_index(1){|ip,i|"server.#{i}=#{ip}:2888:3888"}.join("\n")} >> /etc/zookeeper/conf/zoo.cfg"
 end
 
 service "zookeeper" do
@@ -12,7 +12,7 @@ service "zookeeper" do
 end
 
 file "/etc/mesos/zk" do
-  content "zk://#{node["master_ips"].join(",")}:2181/mesos"
+  content "zk://#{node["master_ips"].map{|ip|"#{ip}:2181"}.join(",")}/mesos"
 end
 
 file "/etc/mesos-master/quorum" do
